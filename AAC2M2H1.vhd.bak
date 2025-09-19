@@ -1,0 +1,31 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
+
+
+ENTITY ALU IS
+PORT( Op_code : IN STD_LOGIC_VECTOR( 2 DOWNTO 0 );
+A, B : IN STD_LOGIC_VECTOR( 31 DOWNTO 0 );
+Y : OUT STD_LOGIC_VECTOR( 31 DOWNTO 0 ) );
+END ALU;
+
+architecture behavioural of ALU is
+begin
+
+operation: process (A,B,Op_code)
+begin
+with Op_code select
+Y<= (A) when "000",
+	std_logic_vector((unsigned(A)+unsigned(B))) when "001",
+	std_logic_vector((unsigned(A)-unsigned(B))) when  "010",
+	(A and B) when"011",
+	(A or B) when"100",
+	std_logic_vector((unsigned(A)+1)) when "101",
+	std_logic_vector((unsigned(A)-1)) when "110",
+	(B) when "111",
+	A when others; 
+
+end process operation;
+
+
+end behavioural;
